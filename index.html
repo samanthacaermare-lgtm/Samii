@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samii's Poultry - Chickens for Sale</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:#f4f1ea;color:#222}
+header{background:#2e7d32;color:#fff;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+header h1{font-size:1.5rem}
+nav a{color:#fff;text-decoration:none;margin:0 .75rem;font-weight:600}
+nav a:hover{text-decoration:underline}
+.hero{background:url('backgrounds/01.jpg') center/cover no-repeat;color:#fff;text-align:center;padding:6rem 1rem;position:relative}
+.hero::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.45)}
+.hero > *{position:relative}
+.hero h2{font-size:2.5rem;margin-bottom:1rem}
+.hero p{font-size:1.1rem;margin-bottom:1.5rem}
+.btn{background:#ff9800;color:#fff;border:none;padding:.75rem 1.5rem;border-radius:6px;cursor:pointer;font-weight:600}
+.btn:hover{background:#f57c00}
+.container{max-width:1200px;margin:0 auto;padding:2rem 1rem}
+.section-title{text-align:center;font-size:1.8rem;margin-bottom:1.5rem;color:#2e7d32}
+.categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.cat-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.1);cursor:pointer;transition:transform .2s}
+.cat-card:hover{transform:translateY(-4px)}
+.cat-card img{width:100%;height:200px;object-fit:cover}
+.cat-card h3{padding:1rem;color:#2e7d32}
+.cat-card p{padding:0 1rem 1rem;color:#555}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem}
+.prod-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.prod-card img{width:100%;height:200px;object-fit:cover}
+.prod-card .info{padding:1rem}
+.prod-card h4{margin-bottom:.5rem;color:#2e7d32}
+.price{color:#e65100;font-weight:700;font-size:1.1rem}
+.avail{font-size:.9rem;margin:.25rem 0}
+.in-stock{color:#2e7d32}.out{color:#c62828}
+.view-btn{background:#2e7d32;color:#fff;border:none;padding:.5rem 1rem;border-radius:4px;cursor:pointer;margin-top:.5rem}
+.view-btn:hover{background:#1b5e20}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);align-items:center;justify-content:center;z-index:100}
+.modal.active{display:flex}
+.modal-content{background:#fff;padding:2rem;border-radius:10px;max-width:600px;width:90%;max-height:90vh;overflow:auto;position:relative}
+.close{position:absolute;top:10px;right:15px;font-size:1.5rem;cursor:pointer;border:none;background:none}
+.modal-content img{width:100%;height:300px;object-fit:cover;border-radius:6px;margin-bottom:1rem}
+.modal-content h3{color:#2e7d32;margin-bottom:.5rem}
+.modal-content .row{margin:.5rem 0}
+footer{background:#2e7d32;color:#fff;text-align:center;padding:1.5rem;margin-top:2rem}
+.admin{background:#fff;padding:2rem;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.admin form{display:grid;gap:1rem;max-width:600px}
+.admin input,.admin select,.admin textarea{padding:.6rem;border:1px solid #ccc;border-radius:4px;width:100%}
+.admin table{width:100%;border-collapse:collapse;margin-top:1.5rem}
+.admin th,.admin td{border:1px solid #ddd;padding:.6rem;text-align:left}
+.admin th{background:#2e7d32;color:#fff}
+.admin .actions button{margin-right:.4rem;padding:.3rem .6rem;border:none;border-radius:4px;cursor:pointer}
+.edit{background:#1976d2;color:#fff}.del{background:#c62828;color:#fff}
+.contact{background:#fff;padding:2rem;border-radius:10px;text-align:center}
+.hidden{display:none}
+@media(max-width:600px){.hero h2{font-size:1.8rem}header{flex-direction:column;gap:.5rem}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🐔 Samii's Poultry</h1>
+  <nav>
+    <a href="#" onclick="showPage('home')">Home</a>
+    <a href="#" onclick="showPage('shop')">Shop</a>
+    <a href="#" onclick="showPage('contact')">Contact</a>
+    <a href="#" onclick="showPage('admin')">Admin</a>
+  </nav>
+</header>
+
+<div id="home" class="page">
+  <section class="hero">
+    <h2>Fresh, Healthy Chickens</h2>
+    <p>Premium poultry raised with care. Browse our selection by age group.</p>
+    <button class="btn" onclick="showPage('shop')">Shop Now</button>
+  </section>
+  <div class="container">
+    <h2 class="section-title">Chicken Categories</h2>
+    <div class="categories">
+      <div class="cat-card" onclick="filterCategory('4-month')">
+        <img src="chicken categories/4-month-old chickens/CHICK01.jpg" alt="4-month">
+        <h3>4-Month-Old Chickens</h3>
+        <p>Teenagers/pullets. Still growing, on grower feed.</p>
+      </div>
+      <div class="cat-card" onclick="filterCategory('5-month')">
+        <img src="chicken categories/5-month-old chickens/01.jpg" alt="5-month">
+        <h3>5-Month-Old Chickens</h3>
+        <p>Nearly mature. Hens begin laying small eggs.</p>
+      </div>
+      <div class="cat-card" onclick="filterCategory('6-month')">
+        <img src="chicken categories/6-month-old chickens and older/CHICKEN.jpg" alt="6-month">
+        <h3>6-Month & Older</h3>
+        <p>Fully mature adults in regular laying.</p>
+      </div>
+    </div>
+    <h2 class="section-title" style="margin-top:2rem">Featured Chickens</h2>
+    <div id="featured" class="products"></div>
+  </div>
+</div>
+
+<div id="shop" class="page hidden">
+  <div class="container">
+    <h2 class="section-title">Our Chickens</h2>
+    <div style="text-align:center;margin-bottom:1rem">
+      <button class="btn" onclick="filterCategory('all')">All</button>
+      <button class="btn" onclick="filterCategory('4-month')">4-Month</button>
+      <button class="btn" onclick="filterCategory('5-month')">5-Month</button>
+      <button class="btn" onclick="filterCategory('6-month')">6-Month+</button>
+    </div>
+    <div id="productList" class="products"></div>
+  </div>
+</div>
+
+<div id="contact" class="page hidden">
+  <div class="container">
+    <div class="contact">
+      <h2 class="section-title">Contact Us</h2>
+      <p><strong>Email:</strong> samantha_caermare@sjp2cd.edu.ph</p>
+      <p><strong>Phone:</strong> 0968-731-9598</p>
+    </div>
+  </div>
+</div>
+
+<div id="admin" class="page hidden">
+  <div class="container">
+    <div class="admin">
+      <h2 class="section-title">Admin Dashboard</h2>
+      <form id="prodForm">
+        <input type="hidden" id="editId">
+        <input id="name" placeholder="Chicken name" required>
+        <select id="category" required>
+          <option value="4-month">4-month-old</option>
+          <option value="5-month">5-month-old</option>
+          <option value="6-month">6-month+</option>
+        </select>
+        <input id="breed" placeholder="Breed" required>
+        <input id="age" placeholder="Age (e.g. 4 months)" required>
+        <input id="price" type="number" placeholder="Price" required>
+        <input id="image" placeholder="Image path" required>
+        <select id="avail" required>
+          <option value="In Stock">In Stock</option>
+          <option value="Out of Stock">Out of Stock</option>
+        </select>
+        <textarea id="desc" placeholder="Description" required></textarea>
+        <button type="submit" class="btn">Save Chicken</button>
+      </form>
+      <table>
+        <thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Avail</th><th>Actions</th></tr></thead>
+        <tbody id="adminTable"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="detailModal">
+  <div class="modal-content">
+    <button class="close" onclick="closeModal()">&times;</button>
+    <img id="dImg" src="" alt="">
+    <h3 id="dName"></h3>
+    <div class="row"><strong>Breed:</strong> <span id="dBreed"></span></div>
+    <div class="row"><strong>Age:</strong> <span id="dAge"></span></div>
+    <div class="row"><strong>Price:</strong> <span id="dPrice"></span></div>
+    <div class="row"><strong>Availability:</strong> <span id="dAvail"></span></div>
+    <div class="row"><strong>Description:</strong> <p id="dDesc"></p></div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 Samii's Poultry. All rights reserved.</p>
+  <p>Email: samantha_caermare@sjp2cd.edu.ph | Phone: 0968-731-9598</p>
+</footer>
+
+<script>
+const defaultProducts = [
+ {id:1,name:"Pullet A",category:"4-month",breed:"Rhode Island Red",age:"4 months",price:350,image:"chicken categories/4-month-old chickens/CHICK01.jpg",avail:"In Stock",desc:"Teenager pullet, still growing, on grower feed. Feathers mostly grown in."},
+ {id:2,name:"Pullet B",category:"4-month",breed:"Leghorn",age:"4 months",price:320,image:"chicken categories/4-month-old chickens/CHICK02.jpg",avail:"In Stock",desc:"Growing pullet, combs reddening, not laying yet."},
+ {id:3,name:"Pullet C",category:"4-month",breed:"Plymouth Rock",age:"4 months",price:360,image:"chicken categories/4-month-old chickens/CHICK03.jpg",avail:"In Stock",desc:"Healthy teenager on grower feed (16-18% protein)."},
+ {id:4,name:"Pullet D",category:"4-month",breed:"Orpington",age:"4 months",price:400,image:"chicken categories/4-month-old chickens/CHICK04.jpg",avail:"Out of Stock",desc:"Fully feathered, can live outdoors."},
+ {id:5,name:"Pullet E",category:"4-month",breed:"Australorp",age:"4 months",price:380,image:"chicken categories/4-month-old chickens/CHICK05.jpg",avail:"In Stock",desc:"Roosters may start crowing; hens not laying yet."},
+ {id:6,name:"Hen A",category:"5-month",breed:"Rhode Island Red",age:"5 months",price:450,image:"chicken categories/5-month-old chickens/01.jpg",avail:"In Stock",desc:"Nearly mature; may lay first small eggs. Switch to layer feed."},
+ {id:7,name:"Hen B",category:"5-month",breed:"Leghorn",age:"5 months",price:420,image:"chicken categories/5-month-old chickens/02.jpg",avail:"In Stock",desc:"Nesting boxes added; pecking order settling."},
+ {id:8,name:"Hen C",category:"5-month",breed:"Plymouth Rock",age:"5 months",price:470,image:"chicken categories/5-month-old chickens/03.jpg",avail:"In Stock",desc:"Roosters identifiable by larger combs and spurs."},
+ {id:9,name:"Hen D",category:"5-month",breed:"Orpington",age:"5 months",price:500,image:"chicken categories/5-month-old chickens/04.jpg",avail:"Out of Stock",desc:"On layer feed with calcium; oyster shell offered."},
+ {id:10,name:"Hen E",category:"5-month",breed:"Australorp",age:"5 months",price:480,image:"chicken categories/5-month-old chickens/05.jpg",avail:"In Stock",desc:"First small eggs expected soon."},
+ {id:11,name:"Adult A",category:"6-month",breed:"Rhode Island Red",age:"6 months",price:550,image:"chicken categories/6-month-old chickens and older/CHICKEN.jpg",avail:"In Stock",desc:"Fully mature, regular laying ~4-6 eggs/week."},
+ {id:12,name:"Adult B",category:"6-month",breed:"Leghorn",age:"7 months",price:580,image:"chicken categories/6-month-old chickens and older/CHICKEN02.jpeg",avail:"In Stock",desc:"Eggs reach full size by 7-8 months."},
+ {id:13,name:"Adult C",category:"6-month",breed:"Plymouth Rock",age:"8 months",price:600,image:"chicken categories/6-month-old chickens and older/CHICJEN03.jpg",avail:"In Stock",desc:"Needs layer feed, grit, water, calcium daily."},
+ {id:14,name:"Adult D",category:"6-month",breed:"Orpington",age:"10 months",price:620,image:"chicken categories/6-month-old chickens and older/CHCKN04.jpg",avail:"Out of Stock",desc:"Rooster fully mature, fertile, protective."},
+ {id:15,name:"Adult E",category:"6-month",breed:"Australorp",age:"12 months",price:650,image:"chicken categories/6-month-old chickens and older/CHCKEN05.jpg",avail:"In Stock",desc:"Peak laying lasts 1-2 years; annual molt in fall."}
+];
+
+function getProducts(){return JSON.parse(localStorage.getItem('products')||'null')||defaultProducts;}
+function saveProducts(p){localStorage.setItem('products',JSON.stringify(p));}
+
+let currentFilter='all';
+function showPage(p){
+ document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));
+ document.getElementById(p).classList.remove('hidden');
+ if(p==='shop')renderProducts();
+ if(p==='admin')renderAdmin();
+ if(p==='home')renderFeatured();
+}
+function renderProducts(){
+ const list=getProducts().filter(x=>currentFilter==='all'||x.category===currentFilter);
+ document.getElementById('productList').innerHTML=list.map(p=>`
+  <div class="prod-card">
+    <img src="${p.image}" alt="${p.name}">
+    <div class="info">
+      <h4>${p.name}</h4>
+      <div>${p.breed} • ${p.age}</div>
+      <div class="price">₱${p.price}</div>
+      <div class="avail ${p.avail==='In Stock'?'in-stock':'out'}">${p.avail}</div>
+      <button class="view-btn" onclick="showDetail(${p.id})">View Details</button>
+    </div>
+  </div>`).join('');
+}
+function filterCategory(c){currentFilter=c;showPage('shop');}
+function renderFeatured(){
+ const list=getProducts().slice(0,4);
+ document.getElementById('featured').innerHTML=list.map(p=>`
+  <div class="prod-card">
+    <img src="${p.image}" alt="${p.name}">
+    <div class="info">
+      <h4>${p.name}</h4>
+      <div>${p.breed} • ${p.age}</div>
+      <div class="price">₱${p.price}</div>
+      <div class="avail ${p.avail==='In Stock'?'in-stock':'out'}">${p.avail}</div>
+      <button class="view-btn" onclick="showDetail(${p.id})">View Details</button>
+    </div>
+  </div>`).join('');
+}
+function showDetail(id){
+ const p=getProducts().find(x=>x.id===id);
+ document.getElementById('dImg').src=p.image;
+ document.getElementById('dName').textContent=p.name;
+ document.getElementById('dBreed').textContent=p.breed;
+ document.getElementById('dAge').textContent=p.age;
+ document.getElementById('dPrice').textContent='₱'+p.price;
+ document.getElementById('dAvail').textContent=p.avail;
+ document.getElementById('dDesc').textContent=p.desc;
+ document.getElementById('detailModal').classList.add('active');
+}
+function closeModal(){document.getElementById('detailModal').classList.remove('active');}
+
+function renderAdmin(){
+ const list=getProducts();
+ document.getElementById('adminTable').innerHTML=list.map(p=>`
+  <tr>
+    <td>${p.name}</td><td>${p.category}</td><td>₱${p.price}</td><td>${p.avail}</td>
+    <td class="actions">
+      <button class="edit" onclick="editProd(${p.id})">Edit</button>
+      <button class="del" onclick="delProd(${p.id})">Delete</button>
+    </td>
+  </tr>`).join('');
+}
+document.getElementById('prodForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const id=document.getElementById('editId').value;
+ const prod={
+  id:id?parseInt(id):Date.now(),
+  name:document.getElementById('name').value,
+  category:document.getElementById('category').value,
+  breed:document.getElementById('breed').value,
+  age:document.getElementById('age').value,
+  price:parseFloat(document.getElementById('price').value),
+  image:document.getElementById('image').value,
+  avail:document.getElementById('avail').value,
+  desc:document.getElementById('desc').value
+ };
+ let list=getProducts();
+ if(id){list=list.map(x=>x.id===parseInt(id)?prod:x);}else{list.push(prod);}
+ saveProducts(list);
+ e.target.reset();
+ document.getElementById('editId').value='';
+ renderAdmin();
+});
+function editProd(id){
+ const p=getProducts().find(x=>x.id===id);
+ document.getElementById('editId').value=p.id;
+ document.getElementById('name').value=p.name;
+ document.getElementById('category').value=p.category;
+ document.getElementById('breed').value=p.breed;
+ document.getElementById('age').value=p.age;
+ document.getElementById('price').value=p.price;
+ document.getElementById('image').value=p.image;
+ document.getElementById('avail').value=p.avail;
+ document.getElementById('desc').value=p.desc;
+}
+function delProd(id){
+ if(confirm('Delete this chicken?')){
+  saveProducts(getProducts().filter(x=>x.id!==id));
+  renderAdmin();
+ }
+}
+renderFeatured();
+</script>
+</body>
+</html>
